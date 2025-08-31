@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: base('Welcome', ~{::extraHead}, ~{::content})}">
+<head>
+  <th:block th:fragment="extraHead">
+    <style>
+      :root { --bg: #0b0d12; --panel: #121721; --border: #1c2432; --muted: #8aa0b2; --text: #eaeef3; --brand: #7cc4ff; }
+      * { box-sizing: border-box; }
+      html, body { height: 100%; }
+      body { margin: 0; background: var(--bg); color: var(--text); display: grid; place-items: center; padding: 24px; }
+      .card { width: 100%; max-width: 620px; background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 28px; box-shadow: 0 10px 30px rgba(0,0,0,.35); }
+      h1 { margin: 0 0 10px; font-size: 26px; }
+      p { color: var(--muted); line-height: 1.6; }
+      .actions { margin-top: 18px; display: flex; gap: 10px; }
+      a.btn { padding: 10px 14px; border-radius: 10px; border: 1px solid #2a3a56; background: linear-gradient(180deg, #1b2a44, #132238); color: var(--text); font-weight: 700; text-decoration: none; }
+      a.btn:hover { filter: brightness(1.05); }
+    </style>
+  </th:block>
+</head>
+<body>
+  <th:block th:fragment="content">
+    <main class="card" role="main">
+      <h1>Welcome to Tech Blog</h1>
+      <p>Sign in to view curated Laravel News posts.</p>
+      <div class="actions">
+        <a class="btn" th:href="@{/login}">Sign in</a>
+      </div>
+    </main>
+  </th:block>
+</body>
+</html>
+

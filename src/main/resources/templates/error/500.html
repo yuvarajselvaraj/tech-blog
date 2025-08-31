@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Something went wrong</title>
+  <style>
+    :root {
+      --bg: #0b1220;
+      --muted: #94a3b8;
+      --text: #e2e8f0;
+      --accent: #f59e0b;
+      --accent-2: #ef4444;
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background: radial-gradient(1200px 600px at 110% -10%, rgba(245,158,11,.12), transparent 60%),
+                  radial-gradient(1200px 600px at -10% 110%, rgba(239,68,68,.14), transparent 60%),
+                  var(--bg);
+      color: var(--text);
+      display: grid;
+      place-items: center;
+      padding: 24px;
+    }
+    .container {
+      width: 100%;
+      max-width: 760px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border: 1px solid rgba(148,163,184,0.15);
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.35), inset 0 1px rgba(255,255,255,0.04);
+      backdrop-filter: blur(8px);
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 10px;
+      font-size: 12px;
+      border-radius: 999px;
+      color: #fda4af;
+      background: rgba(253,164,175,0.08);
+      border: 1px solid rgba(253,164,175,0.25);
+    }
+    h1 { margin: 12px 0 10px; font-size: clamp(28px, 4vw, 40px); line-height: 1.2; }
+    p { color: var(--muted); margin: 0 0 18px; }
+    .meta { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0 24px; }
+    .meta .item { background: rgba(255,255,255,0.02); border: 1px solid rgba(148,163,184,0.15); border-radius: 12px; padding: 12px; }
+    .item .label { font-size: 12px; color: var(--muted); }
+    .item .value { font-weight: 600; word-break: break-all; }
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; }
+    a.button { text-decoration: none; padding: 10px 14px; border-radius: 10px; font-weight: 600; color: var(--text); border: 1px solid rgba(148,163,184,0.25); background: rgba(255,255,255,0.02); transition: transform .05s ease, border-color .2s ease, background .2s ease; }
+    a.primary { background: linear-gradient(135deg, rgba(245,158,11,.25), rgba(239,68,68,.25)); border-color: rgba(239,68,68,.45); }
+    a.button:hover { transform: translateY(-1px); border-color: rgba(148,163,184,0.5); }
+    details { background: rgba(255,255,255,0.02); border: 1px dashed rgba(148,163,184,0.35); border-radius: 12px; padding: 12px; }
+    summary { cursor: pointer; }
+    pre { overflow: auto; max-height: 320px; }
+    footer { margin-top: 18px; font-size: 12px; color: var(--muted); }
+  </style>
+  <meta name="robots" content="noindex" />
+</head>
+<body>
+  <main class="container" role="main">
+    <div class="badge" aria-hidden="true">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path d="M11 7h2v6h-2V7zm0 8h2v2h-2v-2z"/>
+      </svg>
+      Server Error
+    </div>
+    <h1>Sorry, something went wrong</h1>
+    <p>We encountered an unexpected error. You can try again or head home.</p>
+
+    <section class="meta" aria-label="Error details">
+      <div class="item">
+        <div class="label">Path</div>
+        <div class="value" th:text="${path} ?: '/'">/unknown</div>
+      </div>
+      <div class="item">
+        <div class="label">Status</div>
+        <div class="value" th:text="${status} ?: 500">500</div>
+      </div>
+    </section>
+
+    <details>
+      <summary>Show technical details</summary>
+      <pre><code th:text="${error} + ' — ' + (${message} ?: 'No message')">Internal Server Error</code></pre>
+      <pre th:if="${trace}"><code th:text="${trace}">stacktrace...</code></pre>
+    </details>
+
+    <div class="actions">
+      <a class="button primary" href="/">Go to Home</a>
+      <a class="button" href="/blogs">Browse Latest Blogs</a>
+    </div>
+
+    <footer>
+      <span th:if="${timestamp}">Time: <code th:text="${timestamp}">now</code></span>
+    </footer>
+  </main>
+
+  <!--
+    Custom Spring Boot error page for 500 (server error).
+    Thymeleaf variables available (when enabled): ${timestamp}, ${path}, ${error}, ${status}, ${message}, ${trace}
+  -->
+</body>
+</html>
+
