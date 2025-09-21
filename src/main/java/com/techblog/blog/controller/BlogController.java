@@ -33,5 +33,6 @@ public class BlogController {
         );
         return blogPostRepository.findAll(firstPageWithSort).getContent();
     }
+
 }
 
